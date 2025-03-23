@@ -18,6 +18,6 @@ aws s3api put-bucket-versioning --bucket yashkops123.k8s.local --region ap-south
 # Set the KOPS_STATE_STORE environment variable to the S3 bucket where Kops will store the cluster state and configuration
 export KOPS_STATE_STORE=s3://yashkops123.k8s.local
 
-# Will create a cluster having 1 master node and 2 worker/slave nodes of t2.micro size
-kops create cluster --name yashkops123.k8s.local --zones ap-south-1a --master-count=1 --master-size t2.micro --node-count=2 --node-size t2.micro
+# The cluster will consist of 1 master node (t2.medium) and 2 worker/slave nodes (t2.micro).
+kops create cluster --name yashkops123.k8s.local --zones ap-south-1a --master-count=1 --master-size t2.medium --node-count=2 --node-size t2.micro
 kops update cluster --name yashkops123.k8s.local --yes --admin
