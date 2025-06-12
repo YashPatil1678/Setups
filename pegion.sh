@@ -56,25 +56,16 @@ sudo ls -l /etc/systemd/system/prometheus.service
 sudo systemctl daemon-reload && sudo systemctl enable prometheus
 sudo systemctl start prometheus && sudo systemctl status prometheus --no-pager
 
-#GRAFANA
-wget -q -O gpg.key https://rpm.grafana.com/gpg.key
-sudo rpm --import gpg.key
-sudo cat <<EOF | tee /etc/yum.repos.d/grafana.repo
-[grafana]
-name=grafana
-baseurl=https://rpm.grafana.com
-repo_gpgcheck=1
-enabled=1
-gpgcheck=1
-gpgkey=https://rpm.grafana.com/gpg.key
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-EOF
 
-exclude=*beta*
-yum install grafana -y
-systemctl start grafana-server.service
-systemctl status grafana-server.service
+#GRAFANA
+sudo apt-get install -y adduser libfontconfig1
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.4.7_amd64.deb
+sudo dpkg -i grafana-enterprise_9.4.7_amd64.deb
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable grafana-server
+sudo /bin/systemctl start grafana-server
+sudo /bin/systemctl status grafana-server --no-pager
+
 
 #NODEEXPORTER
 wget https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz
